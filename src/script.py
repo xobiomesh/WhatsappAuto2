@@ -12,6 +12,11 @@ def load_config():
         print("Unsupported OS")
         exit(1)
 
+def load_recipient_and_message():
+    recipient_name = input("Enter the recipient's name: ")
+    message = input("Enter the message: ")
+    return recipient_name, message
+
 import time
 import logging
 from selenium import webdriver
@@ -27,6 +32,7 @@ logger = logging.getLogger(__name__)
 
 def main():
     load_config()
+    recipient_name, message = load_recipient_and_message()
     
     chromedriver_path = os.getenv('CHROMEDRIVER_PATH')
     chrome_binary_path = os.getenv('CHROME_BINARY_PATH')
@@ -57,15 +63,13 @@ def main():
     driver = webdriver.Chrome(service=service, options=options)
     
     try:
+        
         driver.get('https://web.whatsapp.com')
         
         WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, '//div[@data-tab="3"]'))
         )
         logger.info("Logged in successfully using the profile!")
-
-        recipient_name = input("Enter the recipient's name: ")
-        message = input("Enter the message: ")
 
         search_box = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"][@data-tab="3"]'))

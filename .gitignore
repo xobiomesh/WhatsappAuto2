@@ -1,0 +1,8 @@
+# Ignore configuration files and environment variables
+config.env
+.env
+__pycache__/
+*.pyc
+chromedriver-linux64
+chromedriver-win64
+ChromeProfile
